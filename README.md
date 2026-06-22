@@ -2,7 +2,7 @@
 
 *A Real-Time Collaborative Code Editor engineered for seamless multi-user development.*
 
- ## 📖 Overview
+## 📖 Overview
 SyncForge is a high-performance, full-stack coding environment that allows multiple developers to write, share, and synchronize code concurrently. Designed with low-latency WebSockets and a modern glassmorphism UI, it provides an isolated, secure, and visually intuitive workspace ideal for technical interviews, pair programming, and team debugging.
 
 ## ✨ Core Features
@@ -14,10 +14,12 @@ SyncForge is a high-performance, full-stack coding environment that allows multi
 ## 🛠️ Technical Architecture
 * **Frontend Engine:** React.js, Vite
 * **Backend Server:** Node.js, Express.js
-* **Real-Time Communication:** Socket.io (Event-driven bidirectional syncing)
+* **Real-Time Communication:** Socket.io 
 * **Database & ORM:** MongoDB Atlas, Mongoose
 
-  ** ststructure **
+## 📂 Project Structure
+
+```text
 syncforge/
 ├── backend/                  # ⚙️ Server-side code (Node.js/Express/Socket.io)
 │   ├── config/               # Database and environment configurations
@@ -77,5 +79,3 @@ syncforge/
     ├── package-lock.json     
     ├── README.md             
     └── vite.config.js        # Vite bundler configuration
----
-*Designed and developed by S Vasantha Kumar.*
