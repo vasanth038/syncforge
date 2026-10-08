@@ -1,81 +1,195 @@
-# ⚡ SyncForge
+# SyncForge
 
-*A Real-Time Collaborative Code Editor engineered for seamless multi-user development.*
+A real-time collaborative code editor for multi-user coding sessions.
 
-## 📖 Overview
-SyncForge is a high-performance, full-stack coding environment that allows multiple developers to write, share, and synchronize code concurrently. Designed with low-latency WebSockets and a modern glassmorphism UI, it provides an isolated, secure, and visually intuitive workspace ideal for technical interviews, pair programming, and team debugging.
+## Features
 
-## ✨ Core Features
-* **Real-Time Synchronization:** Sub-millisecond code updates and state management across all connected clients.
-* **Isolated Coding Rooms:** Unique, collision-free room generation for private collaborative sessions.
-* **Secure Session Management:** Cryptographically secure JWT-based user authentication and bcrypt password hashing.
-* **Responsive Glassmorphism Interface:** A sleek, distraction-free UI prioritizing code readability and modern web aesthetic trends.
+* **User Authentication** — Register and login using JWT authentication with bcrypt password hashing.
+* **Collaborative Rooms** — Create or join coding rooms using unique room IDs.
+* **Real-Time Code Sync** — Synchronize code changes between connected users using Socket.io.
+* **Live Connected Users** — View users currently connected to the same coding room.
+* **Online Code Editor** — Edit code using the Monaco Editor.
+* **Protected Routes** — Restrict authenticated application features to logged-in users.
+* **Responsive UI** — React-based interface designed for collaborative coding sessions.
 
-## 🛠️ Technical Architecture
-* **Frontend Engine:** React.js, Vite
-* **Backend Server:** Node.js, Express.js
-* **Real-Time Communication:** Socket.io 
-* **Database & ORM:** MongoDB Atlas, Mongoose
+## Tech Stack
 
-## 📂 Project Structure
+### Frontend
+
+* React.js
+* Vite
+* Monaco Editor
+* React Router
+* CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* Socket.io
+
+### Database
+
+* MongoDB Atlas
+* Mongoose
+
+### Authentication
+
+* JWT
+* HTTP-only Cookies
+* bcrypt
+
+## Application Flow
 
 ```text
-syncforge/
-├── backend/                  # ⚙️ Server-side code (Node.js/Express/Socket.io)
-│   ├── config/               # Database and environment configurations
-│   │   └── db.js             
-│   ├── controllers/          # Business logic for API endpoints
-│   │   ├── authController.js 
-│   │   └── authMiddleware.js 
-│   ├── models/               # Mongoose database schemas
-│   │   ├── Room.js           
-│   │   └── User.js           
-│   ├── routes/               # API route definitions
-│   │   ├── authRoutes.js     
-│   │   └── userRoutes.js     
-│   ├── socket/               # Real-time WebSocket event handlers
-│   │   └── socketHandler.js  
-│   ├── .env                  # Backend environment variables (Git ignored)
-│   ├── .gitignore            
-│   ├── app.js                # Express app setup and middleware
-│   ├── package.json          
-│   ├── package-lock.json     
-│   └── server.js             # Main entry point: starts Express server and Socket.io
-│
-└── frontend/                 # 💻 Client-side code (React/Vite)
-    ├── public/               # Static assets that bypass Vite's build system
-    │   └── favicon.png       
-    ├── src/                  # React source code
-    │   ├── assets/           # Images, fonts, etc., processed by Vite
-    │   │   └── logo.png      
-    │   ├── components/       # Reusable UI elements
-    │   │   ├── editor/       # Code editor specific components
-    │   │   │   ├── CodeEditor.jsx
-    │   │   │   └── EditorSidebar.jsx
-    │   │   └── room/         # Room management components
-    │   │       ├── CreateRoomBtn.jsx
-    │   │       ├── HeroSection.jsx
-    │   │       └── JoinRoomForm.jsx
-    │   ├── pages/            # Top-level route components
-    │   │   ├── EditorPage.jsx
-    │   │   ├── EditorPage.css
-    │   │   ├── HomePage.jsx
-    │   │   ├── HomePage.css
-    │   │   ├── LoginPage.jsx
-    │   │   ├── LoginPage.css
-    │   │   └── SignupPage.jsx
-    │   ├── routes/           # React Router setup
-    │   │   └── AppRoutes.jsx 
-    │   ├── utils/            # Helper functions
-    │   │   └── generateRoomId.js
-    │   ├── App.jsx           # Root component
-    │   ├── index.css         # Global CSS styles
-    │   ├── main.jsx          # React DOM mounting point
-    │   └── socket.js         # Socket.io client instance initialization
-    ├── .env                  # Frontend environment variables (Git ignored)
-    ├── .gitignore            
-    ├── index.html            # Main HTML template
-    ├── package.json          
-    ├── package-lock.json     
-    ├── README.md             
-    └── vite.config.js        # Vite bundler configuration
+User
+ │
+ ▼
+React Frontend
+ │
+ ├── Authentication ────────► Express API ────────► MongoDB
+ │
+ └── Join/Create Room
+          │
+          ▼
+      Socket.io
+          │
+          ▼
+   Collaborative Room
+      ┌────┴────┐
+      ▼         ▼
+   User A     User B
+      │         │
+      └────┬────┘
+           │
+      Code Changes
+           │
+           ▼
+   Real-Time Synchronization
+```
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/vasanth038/syncforge.git
+cd syncforge
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=8080
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+Start the backend:
+
+```bash
+npm run dev
+```
+
+### 3. Frontend Setup
+
+Open a new terminal:
+
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_BACKEND_URL=http://localhost:8080
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+The frontend will be available at the Vite development URL shown in the terminal.
+
+## Authentication
+
+SyncForge uses JWT-based authentication with HTTP-only cookies.
+
+```text
+Register
+   ↓
+Password hashed using bcrypt
+   ↓
+User stored in MongoDB
+   ↓
+Login
+   ↓
+JWT generated
+   ↓
+JWT stored in HTTP-only cookie
+   ↓
+Protected requests
+   ↓
+Authentication middleware
+   ↓
+Authorized user
+```
+
+## Real-Time Collaboration
+
+Socket.io is used for communication between clients and the backend.
+
+```text
+Client A
+   │
+   │ Code Change
+   ▼
+Socket.io Server
+   │
+   │ Broadcast
+   ▼
+Client B
+   │
+   ▼
+Updated Editor
+```
+
+Users connected to the same room receive code updates through Socket.io events.
+
+## Environment Variables
+
+### Backend
+
+```env
+PORT=8080
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+### Frontend
+
+```env
+VITE_BACKEND_URL=http://localhost:8080
+```
+
+Do not commit `.env` files or expose secrets in the repository.
+
+## Future Improvements
+
+* Room expiration and automatic cleanup
+* In-room chat
+* Invite links
+* Code execution support
+* Additional programming language support
+* Improved conflict handling for simultaneous edits
+* Room ownership and access controls
